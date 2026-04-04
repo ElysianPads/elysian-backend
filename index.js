@@ -8,7 +8,7 @@ app.use(express.json());
 app.use((req, res, next) => {
   const auth = req.headers.authorization;
 
-  if (auth !== "Bearer my-secret-key") {
+  if (auth !== `Bearer ${process.env.INTERNAL_API_KEY}`) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 app.get("/properties", async (req, res) => {
   const response = await fetch("https://api.lodgify.com/v2/properties", {
     headers: {
-      Authorization: "Bearer YOUR_LODGIFY_API_KEY"
+      Authorization: `Bearer ${process.env.LODGIFY_API_KEY}`
     }
   });
 
